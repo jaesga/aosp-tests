@@ -62,6 +62,8 @@ public class EditText extends TextView {
 
     public EditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+
+        disableContextualPopup();
     }
 
     @Override
@@ -143,5 +145,30 @@ public class EditText extends TextView {
                 return super.performAccessibilityActionInternal(action, arguments);
             }
         }
+    }
+
+    private void disableContextualPopup() {
+        this.setLongClickable(false);
+        this.setCustomSelectionActionModeCallback(new android.view.ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(android.view.ActionMode actionMode, android.view.Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(android.view.ActionMode actionMode, android.view.Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(android.view.ActionMode actionMode, android.view.MenuItem menuItem) {
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(android.view.ActionMode actionMode) {
+
+            }
+        });
     }
 }
